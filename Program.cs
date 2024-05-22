@@ -1,77 +1,62 @@
-﻿using EspacioCalculadora;
+﻿using EspacioEmpleado;
 
-Calculadora calcN = new Calculadora();
+Empleado[] Empleados = new Empleado[3];
 
-int continuar = 1, opcion;
-double termino;
+// Empleados
+Empleados[0] = new Empleado();
+Empleados[0].Nombre1 = "William";
+Empleados[0].Apellido1 = "Wiernes";
+Empleados[0].FecNac1 = new DateTime(2004, 1, 23);
+Empleados[0].EstCiv1 = 'c';
+Empleados[0].IngEmp1 = new DateTime(2023, 1, 1);
+Empleados[0].SueBas1 = 900000;
+Empleados[0].Cargo1 = Cargos.Especialista;
 
-while (continuar == 1)
-{
-    opcion = Menu();
+Empleados[1] = new Empleado();
+Empleados[1].Nombre1 = "Brian";
+Empleados[1].Apellido1 = "Wiernes";
+Empleados[1].FecNac1 = new DateTime(2002, 1, 7);
+Empleados[1].EstCiv1 = 'c';
+Empleados[1].IngEmp1 = new DateTime(2021, 1, 1);
+Empleados[1].SueBas1 = 200000;
+Empleados[1].Cargo1 = Cargos.Auxiliar;
 
-    switch (opcion)
+Empleados[2] = new Empleado();
+Empleados[2].Nombre1 = "María";
+Empleados[2].Apellido1 = "Sosa";
+Empleados[2].FecNac1 = new DateTime(1980, 4, 11);
+Empleados[2].EstCiv1 = 's';
+Empleados[2].IngEmp1 = new DateTime(2012, 1, 1);
+Empleados[2].SueBas1 = 700000;
+Empleados[2].Cargo1 = Cargos.Administrativo;
+
+double montoTotal = 0;
+int  index = 0, minAniosJub = Empleados[index].AnioJub(), aniosJub;
+
+foreach (Empleado Empleado in Empleados)
+{   
+    montoTotal += Empleado.Salario();
+
+    aniosJub = Empleado.AnioJub();
+
+    if(aniosJub < minAniosJub)
     {
-        case 1:
-            termino = TerminoCorrecto();
-            calcN.Sumar(termino);
-            Console.WriteLine($"Resultado de la suma: {calcN.Resultado}");
-            break;
-        case 2:
-            termino = TerminoCorrecto();
-            calcN.Restar(termino);
-            Console.WriteLine($"Resultado de la resta: {calcN.Resultado}");
-            break;
-        case 3:
-            termino = TerminoCorrecto();
-            calcN.Multiplicar(termino);
-            Console.WriteLine($"Resultado de la multiplicación: {calcN.Resultado}");
-            break;
-        case 4:
-            termino = TerminoCorrecto();
-            calcN.Dividir(termino);
-            Console.WriteLine($"Resultado de la división: {calcN.Resultado}");
-            break;
-        case 5:
-            calcN.Limpiar();
-            Console.WriteLine("Limpiado");
-            break;
-        default:
-            Console.WriteLine("Opción no reconocida");
-            break;
+        minAniosJub = aniosJub;
+        index++;
     }
-
-    do
-    {
-        Console.Write("Desea realizar otra operación? [0] => NO [1] => SI: ");
-    } while (!int.TryParse(Console.ReadLine(), out continuar) || (continuar != 0 && continuar != 1));
 }
 
-static int Menu()
-{
-    int opcion;
-
-    Console.WriteLine("1. Sumar");
-    Console.WriteLine("2. Restar");
-    Console.WriteLine("3. Multiplicar");
-    Console.WriteLine("4. Dividir");
-    Console.WriteLine("5. Limpiar");
-
-    do
-    {
-        Console.Write("Opción: ");
-    } while (!int.TryParse(Console.ReadLine(), out opcion));
-
-    return opcion;
-}
-
-static double TerminoCorrecto()
-{
-    double termino;
-
-    do
-    {
-        Console.Write("Ingrese un número: ");
-    } while (!double.TryParse(Console.ReadLine(), out termino));
-
-    return termino;
-}
+Console.WriteLine($"Monto total en concepto de salario: ${montoTotal}");
+Console.WriteLine("");
+Console.WriteLine("Empleado más próximo a jubilarse:");
+Console.WriteLine($"Nombre: {Empleados[index].Nombre1}");
+Console.WriteLine($"Apellido: {Empleados[index].Apellido1}");
+Console.WriteLine($"Fecha de nacimiento: {Empleados[index].FecNac1}");
+Console.WriteLine($"Estado civil: {Empleados[index].EstCiv1}");
+Console.WriteLine($"Ingreso a la empresa: {Empleados[index].IngEmp1}");
+Console.WriteLine($"Sueldo básico: ${Empleados[index].SueBas1}");
+Console.WriteLine($"Cargo: {Empleados[index].Cargo1}");
+Console.WriteLine($"Antiguedad: {Empleados[index].Antiguedad()}");
+Console.WriteLine($"Edad: {Empleados[index].Edad()}");
+Console.WriteLine($"Cantidad de años para jubilarse: {Empleados[index].AnioJub()}");
+Console.WriteLine($"Salario: ${Empleados[index].Salario()}");
